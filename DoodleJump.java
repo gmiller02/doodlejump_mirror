@@ -1,6 +1,5 @@
 package doodlejump;
 
-import cartoon.Cartoon;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -17,21 +16,29 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.Node;
 
 
 public class DoodleJump {
-    private Rectangle _doodle;
-    public DoodleJump(BorderPane _root, HBox buttonPane) {
+    private Doodle _realDoodle;
+    private Rectangle _testPlatform;
+
+    public DoodleJump(BorderPane _root, HBox buttonPane, Pane doodlePane) {
         Pane gamePane = new Pane();
         gamePane.setPrefSize(300, 500);
         gamePane.setStyle("-fx-background-color: #FFFFFF");
         _root.setCenter(gamePane);
 
-        _doodle = new Rectangle(Constants.DOODLE_WIDTH, Constants.DOODLE_HEIGHT);
-        _doodle.setFill(Color.LIMEGREEN);
-        _root.getChildren().addAll(_doodle);
-        gamePane.addEventHandler(KeyEvent.KEY_PRESSED, new DoodleJump.KeyHandler());
-        this.setXLoc(10);
+
+        _realDoodle = new Doodle(gamePane);
+        _root.getChildren().addAll(doodlePane);
+        gamePane.getChildren().addAll(doodlePane);
+
+        _testPlatform = new Rectangle(10,250,Constants.PLATFORM_WIDTH, Constants.PLATFORM_HEIGHT);
+        _testPlatform.setFill(Color.BLUEVIOLET);
+        gamePane.getChildren().addAll(_testPlatform);
+
+
 
         Button quit = new Button();
         quit.setText("Quit");
@@ -40,31 +47,38 @@ public class DoodleJump {
         _root.setBottom(buttonPane);
         buttonPane.setAlignment(Pos.BOTTOM_RIGHT);
 
+
         this.setUpTimeline();
+
     }
 
-    public void setXLoc(double x) {
-        _doodle.setX(x);
-    }
-
-    public double getXLoc() {
-        return _doodle.setX();
+    public void bounce() {
+        if (_realDoodle.getVelocity() < 0 && _testPlatform.intersects(10,250,Constants.PLATFORM_WIDTH, Constants.PLATFORM_HEIGHT)) {
+            _realDoodle.
+        }
     }
 
 
     public void setUpTimeline() {
-        KeyFrame kf = new KeyFrame(Duration.seconds(2), new DoodleJump.TimeHandler());
+        KeyFrame kf = new KeyFrame(Duration.seconds(Constants.DURATION), new DoodleJump.TimeHandler());
         Timeline timeline = new Timeline(kf);
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
     }
 
+
     private class TimeHandler implements EventHandler<ActionEvent> {
+
         public void handle(ActionEvent event) {
+
+            _realDoodle.cauclateVelocity();
+            _realDoodle.caculatePosition();
+            DoodleJump.this.bounce();
 
         }
 
     }
+
 
 
     private class ClickHandler implements EventHandler<ActionEvent> {
@@ -73,28 +87,5 @@ public class DoodleJump {
         }
     }
 
-    private class KeyHandler implements EventHandler<KeyEvent> {
 
-        public void handle(KeyEvent e) {
-            KeyCode keyPressed = e.getCode();
-
-            switch (keyPressed) {
-                case LEFT:
-                    _doodle.setXLoc(_doodle.getXLoc() - 10);
-
-                    break;
-                case RIGHT:
-                    _doodle.setXLoc(_doodle.getXLoc() + 10);
-
-                    break;
-            }
-            e.consume();
-            if (_doodle.getXLoc() < 0) {
-                _doodle.setX(499);
-            }
-            if (_doodle.getXLoc() > 500) {
-                _doodle.setX(1);
-            }
-        }
-    }
 }

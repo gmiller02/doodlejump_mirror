@@ -13,7 +13,7 @@ public class PaneOrganizer {
     public PaneOrganizer() {
         _root = new BorderPane();
         _root.setStyle("-fx-background-color: #FFFFFF;");
-        new DoodleJump(_root, new HBox());
+        new DoodleJump(_root, new HBox(), new Pane());
     }
 
     public BorderPane getRoot() {
