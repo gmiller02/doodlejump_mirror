@@ -49,7 +49,8 @@ public class Doodle {
         Doodle.this.setYLoc(this.getYLoc() + _velocity * Constants.DURATION);
     }
 
-    public int setVelocity() {
+    public void setVelocity(double v) {
+        _velocity = v;
 
     }
 

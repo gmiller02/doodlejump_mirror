@@ -8,20 +8,19 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.Node;
+import java.util.ArrayList;
 
 
 public class DoodleJump {
     private Doodle _realDoodle;
     private Rectangle _testPlatform;
+    private ArrayList<Platform> _doodlejumpPlatforms;
 
     public DoodleJump(BorderPane _root, HBox buttonPane, Pane doodlePane) {
         Pane gamePane = new Pane();
@@ -38,7 +37,10 @@ public class DoodleJump {
         _testPlatform.setFill(Color.BLUEVIOLET);
         gamePane.getChildren().addAll(_testPlatform);
 
-
+        _doodlejumpPlatforms = new ArrayList<Platform>();
+        for (int i=0; i<20; i++) {
+            _doodlejumpPlatforms.add(new Platform());
+        }
 
         Button quit = new Button();
         quit.setText("Quit");
@@ -53,10 +55,15 @@ public class DoodleJump {
     }
 
     public void bounce() {
-        if (_realDoodle.getVelocity() < 0 && _testPlatform.intersects(10,250,Constants.PLATFORM_WIDTH, Constants.PLATFORM_HEIGHT)) {
-            _realDoodle.
+        if (_realDoodle.getVelocity() > 0 && _testPlatform.intersects(_realDoodle.getXLoc(), _realDoodle.getYLoc(),Constants.PLATFORM_WIDTH, Constants.PLATFORM_HEIGHT)) {
+            _realDoodle.setVelocity(Constants.REBOUND_VELOCITY);
         }
     }
+
+    public void addPlatforms() {
+        
+    }
+
 
 
     public void setUpTimeline() {
@@ -73,6 +80,7 @@ public class DoodleJump {
 
             _realDoodle.cauclateVelocity();
             _realDoodle.caculatePosition();
+
             DoodleJump.this.bounce();
 
         }
