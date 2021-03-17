@@ -28,6 +28,8 @@ public class Doodle {
         this.setXLoc(10);
         this.setYLoc(390);
 
+        _velocity = 0;
+
     }
 
     public void setXLoc(double x) {

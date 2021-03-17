@@ -24,7 +24,7 @@ public class DoodleJump {
     private Pane _gamePane;
     private Rectangle _bottom;
 
-    public DoodleJump(BorderPane _root, HBox buttonPane, Pane doodlePane, Pane platformPane, Hbox labelPane) {
+    public DoodleJump(BorderPane _root, HBox buttonPane, Pane doodlePane, Pane platformPane) {
         _gamePane = new Pane();
         _gamePane.setPrefSize(300, 500);
         _gamePane.setStyle("-fx-background-color: #FFFFFF");
@@ -58,12 +58,14 @@ public class DoodleJump {
 
         Label label = new Label();
         label.setText("Game Over");
-        labelPane.getChildren().add(label);
+        //labelPane.getChildren().add(label);
         label.setVisible(false);
         if (_realDoodle.getYLoc() > 600) {
             label.setVisible(true);
         }
-        labelPane.setAlignment(Pos.CENTER);
+        //labelPane.setAlignment(Pos.CENTER);
+
+        DoodleJump.this.generatePlatforms();
 
         this.setUpTimeline();
 
@@ -74,7 +76,7 @@ public class DoodleJump {
 
     public void bounce() {
         for (Platform platform: _doodlejumpPlatforms) {
-            if (_realDoodle.getVelocity() > 0 && platform.getRect().intersects(_realDoodle.getXLoc(), _realDoodle.getYLoc(),Constants.PLATFORM_WIDTH, Constants.PLATFORM_HEIGHT)) {
+            if (_realDoodle.getVelocity() > 0 && platform.getRect().intersects(_realDoodle.getXLoc(), _realDoodle.getYLoc(),Constants.DOODLE_WIDTH, Constants.DOODLE_HEIGHT)) {
                 _realDoodle.setVelocity(Constants.REBOUND_VELOCITY);
             }
         }
@@ -83,7 +85,6 @@ public class DoodleJump {
 
     public void generatePlatforms() {
         Platform topPlatform = _doodlejumpPlatforms.get(_doodlejumpPlatforms.size() - 1);
-
         double xlow;
         double xhigh;
         double ylow;
@@ -118,8 +119,8 @@ public class DoodleJump {
             if (_realDoodle.getYLoc() < 250) {
                 yAboveMidpoint = 250 - _realDoodle.getYLoc();
                 _realDoodle.setYLoc(250);
-                platformPosition = platform.getXLoc() + yAboveMidpoint;
-                platform.setXLoc(platformPosition);
+                platformPosition = platform.getYLoc() + yAboveMidpoint;
+                platform.setYLoc(platformPosition);
             }
             else if (_realDoodle.getYLoc() > 250) {
                 _realDoodle.setPosition();
@@ -130,7 +131,7 @@ public class DoodleJump {
             }
         }
 
-
+        DoodleJump.this.generatePlatforms();
     }
 
 
@@ -153,9 +154,7 @@ public class DoodleJump {
 
             DoodleJump.this.bounce();
 
-            DoodleJump.this.generatePlatforms();
-            DoodleJump.this.verticalScrolling();
-
+            //DoodleJump.this.verticalScrolling();
         }
 
     }

@@ -1,0 +1,26 @@
+doodlejump README
+
+Handin: this is my final handin
+
+Overview:
+
+My DoodleJump has the following classes: App, PaneOrganizer, DoodleJump, Doodle, and Platform. They are organized in the
+following ways:
+
+App instantiates my PaneOrganizer class.
+PaneOrganizer creates an instance of my DoodleJump class and instantiates the various panes it uses.
+DoodleJump contains an instance variable of my Doodle class and the EventHandlers that are necessary to animate my doodle.
+Doodle contains an EventHandler of its own that allows the user to move it with different keys.
+DoodleJump contains an instance of my Platform class called topPlatform, and several methods and an ArrayList that generate
+an infinite amount of platform instances.
+
+Design Choices:
+
+I tried to separate my classes as much as possible so that I did not clutter my game class- for example, I put the keyHandler
+that moves my doodle with arrow keys in my Doodle class. However, I do not think I use any logic that is out-of-ordinary because
+I tried to follow the psuedocode as much as possible.
+
+Known Bugs:
+
+Hours: This project took around 20 hours to complete.
+
