@@ -18,8 +18,8 @@ package doodlejump;
  */
 public class Constants {
 
-    public static final int GRAVITY = 1000; // acceleration constant (UNITS: pixels/s^2)
-    public static final int REBOUND_VELOCITY = -600; // initial jump velocity (UNITS: pixels/s)
+    public static final int GRAVITY = 100; // acceleration constant (UNITS: pixels/s^2)
+    public static final int REBOUND_VELOCITY = -900; // initial jump velocity (UNITS: pixels/s)
     public static final double DURATION = 0.016; // KeyFrame duration (UNITS: s)
     public static final double INITIAL_VELOCITY = 0;
 
@@ -27,6 +27,10 @@ public class Constants {
     public static final int PLATFORM_HEIGHT = 10; // (UNITS: pixels)
     public static final int DOODLE_WIDTH = 20; // (UNITS: pixels)
     public static final int DOODLE_HEIGHT = 40; // (UNITS: pixels)
+
+    public static final int X_OFFSET = 200;
+    public static final int Y_OFFSET_MIN = 10;
+    public static final int Y_OFFSET_MAX = 100;
 
 
 }

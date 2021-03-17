@@ -12,4 +12,20 @@ public class Platform {
         _platform.setFill(Color.BLUE);
         platformPane.getChildren().addAll(_platform);
     }
+
+    public void setXLoc(double x) {
+        _platform.setX(x);
+    }
+
+    public double getXLoc() {
+        return _platform.getX();
+    }
+
+    public void setYLoc(double y) {_platform.setY(y);}
+
+    public double getYLoc() {return _platform.getY();}
+
+    public Rectangle getRect() {
+        return _platform;
+    }
 }

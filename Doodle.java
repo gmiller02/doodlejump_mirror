@@ -15,6 +15,7 @@ import javafx.util.Duration;
 public class Doodle {
     private Rectangle _doodle;
     private double _velocity;
+    private double _potentialPosition;
 
     public Doodle(Pane doodlePane) {
         _doodle = new Rectangle(Constants.DOODLE_WIDTH, Constants.DOODLE_HEIGHT);
@@ -25,6 +26,7 @@ public class Doodle {
         doodlePane.setFocusTraversable(true);
 
         this.setXLoc(10);
+        this.setYLoc(390);
 
     }
 
@@ -45,13 +47,15 @@ public class Doodle {
     }
 
 
-    public void caculatePosition() {
-        Doodle.this.setYLoc(this.getYLoc() + _velocity * Constants.DURATION);
+    public void caculatePosition() {Doodle.this.setYLoc(this.getYLoc() + _velocity * Constants.DURATION);
+    }
+
+    public void setPosition() {
+        this.caculatePosition();
     }
 
     public void setVelocity(double v) {
         _velocity = v;
-
     }
 
 

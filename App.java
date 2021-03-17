@@ -20,6 +20,7 @@ public class App extends Application {
         stage.setScene(new Scene(organizer.getRoot(),400, 600));
         stage.setTitle("Stage");
         stage.show();
+
         // Instantiate top-level object, set up the scene, and show the stage here.
     }
 
