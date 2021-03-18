@@ -31,7 +31,7 @@ public class DoodleJump {
     private Doodle _realDoodle;
     private ArrayList<Platform> _doodlejumpPlatforms;
     private Pane _gamePane;
-    private Rectangle _bottom;
+    private Timeline _timeline;
 
     public DoodleJump(BorderPane _root, HBox buttonPane, HBox labelPane, Pane doodlePane, Pane platformPane) {
         _gamePane = new Pane();
@@ -41,12 +41,7 @@ public class DoodleJump {
 
 
         _realDoodle = new Doodle(_gamePane);
-        //_root.getChildren().addAll(doodlePane);
-        //_gamePane.getChildren().addAll(doodlePane);
 
-        //_bottom = new Rectangle(0,500, 400, 200);
-        //_bottom.setFill(Color.GRAY);
-        //_gamePane.getChildren().addAll(_bottom);
 
 
         _doodlejumpPlatforms = new ArrayList<Platform>();
@@ -64,7 +59,6 @@ public class DoodleJump {
         _root.setBottom(buttonPane);
         buttonPane.setAlignment(Pos.BOTTOM_RIGHT);
 
-
         DoodleJump.this.generatePlatforms();
 
         this.setUpTimeline();
@@ -77,13 +71,13 @@ public class DoodleJump {
      */
 
     public void checkIfGameIsOver() {
-        if (_realDoodle.getYLoc() > 500) {
+        if (_realDoodle.getYLoc() > 600) {
             Label label = new Label();
             label.setText("Game Over");
             _gamePane.getChildren().add(label);
             label.setLayoutX(150);
             label.setLayoutY(300);
-
+            _timeline.pause();
         }
     }
 
@@ -136,16 +130,23 @@ public class DoodleJump {
             platform.setYLoc(yCoord);
             _doodlejumpPlatforms.add(platform);
             topPlatform = platform;
-
         }
 
     }
+
+    /**
+     * This class is responsible for animating the scrolling of my platforms. It contains two doubles, one of which stands
+     * for the distance above the midpoint, and the other stands for the new position of the platform. If the platform
+     * reaches a certain point on the screen, all of the platforms will scroll down and new platforms will be added and
+     * removed from the array as the game scrolls.
+     */
 
     public void verticalScrolling() {
         double yAboveMidpoint;
         double platformPosition;
 
-
+        // the bottom if statement iterates through the platforms when the doodle is above the midpoint. if it is,
+        // the platforms will move the same distance above the midpoint as the doodle.
         if (_realDoodle.getYLoc() <= 250) {
             yAboveMidpoint = 250 - _realDoodle.getYLoc();
             for (Platform platform: _doodlejumpPlatforms) {
@@ -158,7 +159,10 @@ public class DoodleJump {
             _realDoodle.setPosition();
         }
 
-        while (_doodlejumpPlatforms.get(0).getYLoc() > 500) {
+        // The bottom loop removes the platforms graphically and logically once the platforms fall out of the screen's
+        // bounds.
+
+        while (_doodlejumpPlatforms.get(0).getYLoc() > 600) {
             _gamePane.getChildren().remove(_doodlejumpPlatforms.get(0).getRect());
             _doodlejumpPlatforms.remove(0);
         }
@@ -174,9 +178,9 @@ public class DoodleJump {
 
     public void setUpTimeline() {
         KeyFrame kf = new KeyFrame(Duration.seconds(Constants.DURATION), new DoodleJump.TimeHandler());
-        Timeline timeline = new Timeline(kf);
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
+        _timeline = new Timeline(kf);
+        _timeline.setCycleCount(Animation.INDEFINITE);
+        _timeline.play();
     }
 
     /**
@@ -199,6 +203,7 @@ public class DoodleJump {
             DoodleJump.this.verticalScrolling();
 
             DoodleJump.this.checkIfGameIsOver();
+
         }
 
     }
@@ -206,8 +211,6 @@ public class DoodleJump {
     /**
      * This class extends the EventHandler class and enables the quit button to quit the game when clicked on.
      */
-
-
 
     private class ClickHandler implements EventHandler<ActionEvent> {
         public void handle(ActionEvent Event) {

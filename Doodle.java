@@ -21,22 +21,27 @@ import javafx.scene.layout.Pane;
 public class Doodle {
     private Rectangle _doodle;
     private double _velocity;
+    private Pane _doodlePane;
 
 
-    public Doodle(Pane doodlePane) {
+    public Doodle(Pane _doodlePane) {
         _doodle = new Rectangle(Constants.DOODLE_WIDTH, Constants.DOODLE_HEIGHT);
         _doodle.setFill(Color.LIMEGREEN);
-        doodlePane.getChildren().addAll(_doodle);
+        _doodlePane.getChildren().addAll(_doodle);
 
-        doodlePane.addEventHandler(KeyEvent.KEY_PRESSED, new Doodle.KeyHandler());
-        doodlePane.setFocusTraversable(true);
+        _doodlePane.addEventHandler(KeyEvent.KEY_PRESSED, new Doodle.KeyHandler());
+        _doodlePane.setFocusTraversable(true);
 
         this.setXLoc(150);
         this.setYLoc(350);
 
         _velocity = 0;
 
+        if (Doodle.this.getXLoc() > 600) {
+            _doodlePane.setOnKeyPressed(null);
+        }
     }
+
 
     /**
      * Creates the variable x, which corresponds to the value of the doodle's x position, and sets said position.
@@ -125,6 +130,7 @@ public class Doodle {
             switch (keyPressed) {
                 case LEFT:
                     Doodle.this.setXLoc(Doodle.this.getXLoc() - 30);
+                    System.out.println("right");
                     break;
                 case RIGHT:
                     Doodle.this.setXLoc(Doodle.this.getXLoc() + 30);
@@ -137,6 +143,8 @@ public class Doodle {
             if (Doodle.this.getXLoc() > 500) {
                 _doodle.setX(1);
             }
+
+
         }
     }
 }
