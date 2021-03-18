@@ -32,7 +32,7 @@ public class Doodle {
         doodlePane.setFocusTraversable(true);
 
         this.setXLoc(150);
-        this.setYLoc(260);
+        this.setYLoc(350);
 
         _velocity = 0;
 
@@ -124,10 +124,10 @@ public class Doodle {
 
             switch (keyPressed) {
                 case LEFT:
-                    Doodle.this.setXLoc(Doodle.this.getXLoc() - 20);
+                    Doodle.this.setXLoc(Doodle.this.getXLoc() - 30);
                     break;
                 case RIGHT:
-                    Doodle.this.setXLoc(Doodle.this.getXLoc() + 20);
+                    Doodle.this.setXLoc(Doodle.this.getXLoc() + 30);
                     break;
             }
             e.consume();

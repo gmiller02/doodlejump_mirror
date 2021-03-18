@@ -19,7 +19,7 @@ package doodlejump;
 public class Constants {
 
     public static final int GRAVITY = 1000; // acceleration constant (UNITS: pixels/s^2)
-    public static final int REBOUND_VELOCITY = -700; // initial jump velocity (UNITS: pixels/s)
+    public static final int REBOUND_VELOCITY = -800; // initial jump velocity (UNITS: pixels/s)
     public static final double DURATION = 0.016; // KeyFrame duration (UNITS: s)
 
 

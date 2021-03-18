@@ -33,7 +33,7 @@ public class DoodleJump {
     private Pane _gamePane;
     private Rectangle _bottom;
 
-    public DoodleJump(BorderPane _root, HBox buttonPane, Pane doodlePane, Pane platformPane) {
+    public DoodleJump(BorderPane _root, HBox buttonPane, HBox labelPane, Pane doodlePane, Pane platformPane) {
         _gamePane = new Pane();
         _gamePane.setPrefSize(300, 500);
         _gamePane.setStyle("-fx-background-color: #FFFFFF");
@@ -44,17 +44,16 @@ public class DoodleJump {
         //_root.getChildren().addAll(doodlePane);
         //_gamePane.getChildren().addAll(doodlePane);
 
-        _bottom = new Rectangle(0,500, 400, 200);
-        _bottom.setFill(Color.GRAY);
-        _gamePane.getChildren().addAll(_bottom);
-
+        //_bottom = new Rectangle(0,500, 400, 200);
+        //_bottom.setFill(Color.GRAY);
+        //_gamePane.getChildren().addAll(_bottom);
 
 
         _doodlejumpPlatforms = new ArrayList<Platform>();
 
         Platform topPlatform = new Platform(_gamePane);
         topPlatform.setXLoc(150);
-        topPlatform.setYLoc(270);
+        topPlatform.setYLoc(400);
         _doodlejumpPlatforms.add(topPlatform);
 
 
@@ -65,19 +64,23 @@ public class DoodleJump {
         _root.setBottom(buttonPane);
         buttonPane.setAlignment(Pos.BOTTOM_RIGHT);
 
-        Label label = new Label();
-        label.setText("Game Over");
-        //labelPane.getChildren().add(label);
-        label.setVisible(false);
-        if (_realDoodle.getYLoc() > 600) {
-            label.setVisible(true);
-        }
-        //labelPane.setAlignment(Pos.CENTER);
 
         DoodleJump.this.generatePlatforms();
 
         this.setUpTimeline();
 
+    }
+
+    public void checkIfGameIsOver() {
+        if (_realDoodle.getYLoc() > 500) {
+            Label label = new Label();
+            label.setText("Game Over");
+            _gamePane.getChildren().add(label);
+            label.setLayoutX(150);
+            label.setLayoutY(300);
+            //_gamePane.setCenter(labelPane);
+            //labelPane.setAlignment(Pos.BASELINE_LEFT);
+        }
     }
 
     /**
@@ -138,17 +141,19 @@ public class DoodleJump {
         double yAboveMidpoint;
         double platformPosition;
 
-        for (Platform platform: _doodlejumpPlatforms) {
-            if (_realDoodle.getYLoc() < 250) {
-                yAboveMidpoint = 250 - _realDoodle.getYLoc();
-                _realDoodle.setYLoc(250);
+
+        if (_realDoodle.getYLoc() <= 250) {
+            yAboveMidpoint = 250 - _realDoodle.getYLoc();
+            for (Platform platform: _doodlejumpPlatforms) {
                 platformPosition = platform.getYLoc() + yAboveMidpoint;
                 platform.setYLoc(platformPosition);
             }
-            else if (_realDoodle.getYLoc() > 250) {
-                _realDoodle.setPosition();
-            }
+            _realDoodle.setYLoc(250);
         }
+        else if (_realDoodle.getYLoc() > 250) {
+            _realDoodle.setPosition();
+        }
+
         while (_doodlejumpPlatforms.get(0).getYLoc() > 500) {
             _gamePane.getChildren().remove(_doodlejumpPlatforms.get(0).getRect());
             _doodlejumpPlatforms.remove(0);
@@ -188,6 +193,8 @@ public class DoodleJump {
             DoodleJump.this.bounce();
 
             DoodleJump.this.verticalScrolling();
+
+            DoodleJump.this.checkIfGameIsOver();
         }
 
     }
