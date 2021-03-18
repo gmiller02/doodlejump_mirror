@@ -15,7 +15,7 @@ import javafx.scene.layout.Pane;
  * This class creates the object Doodle. Doodle is a simple rectangle shape, so this class mainly contains the different
  * methods that help animate the Doodle, such as several getter and setter methods that caculate its position and velocity.
  * This class also contains a Keyhandler that allows the Doodle to be moved with arrow keys. Finally, it also contains an instance
- * variable called _velocity that helps to caculate the Doodle's velocity. 
+ * variable called _velocity that helps to caculate the Doodle's velocity.
  */
 
 public class Doodle {
@@ -130,7 +130,6 @@ public class Doodle {
             switch (keyPressed) {
                 case LEFT:
                     Doodle.this.setXLoc(Doodle.this.getXLoc() - 30);
-                    System.out.println("right");
                     break;
                 case RIGHT:
                     Doodle.this.setXLoc(Doodle.this.getXLoc() + 30);
