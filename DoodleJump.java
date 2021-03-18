@@ -71,6 +71,11 @@ public class DoodleJump {
 
     }
 
+    /**
+     * This method is responsible for making my 'Game Over' screen. It contains a label that is only visible when the
+     * doodle falls below the bottom of the screen.
+     */
+
     public void checkIfGameIsOver() {
         if (_realDoodle.getYLoc() > 500) {
             Label label = new Label();
@@ -78,8 +83,7 @@ public class DoodleJump {
             _gamePane.getChildren().add(label);
             label.setLayoutX(150);
             label.setLayoutY(300);
-            //_gamePane.setCenter(labelPane);
-            //labelPane.setAlignment(Pos.BASELINE_LEFT);
+
         }
     }
 
